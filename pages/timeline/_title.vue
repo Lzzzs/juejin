@@ -15,7 +15,9 @@
         <artic-list :list="list"></artic-list>
       </div>
       <div class="index-side">
-        <author-rank :list="recommendAuthors"></author-rank>
+        <banner-block v-for="item in bannerList" :key="item.id" :banner="item"></banner-block>
+        <download-block></download-block>
+        <author-block :list="authorList"></author-block>
       </div>
     </div>
   </div>
@@ -24,7 +26,9 @@
 <script>
 import { mapState } from 'vuex'
 import reachBottom from '~/mixins/reachBottom'
-import authorRank from '~/components/business/timeline/authorRank'
+import bannerBlock from '~/components/business/timeline/bannerBlock'
+import authorBlock from '~/components/business/timeline/authorBlock'
+import downloadBlock from '~/components/business/timeline/downloadBlock'
 import timelineCategory from '~/components/business/timeline/timelineCategory'
 
 export default {
@@ -32,7 +36,7 @@ export default {
     // 分类列表
     let initCategoryList = [{ category_id: 0, category_name: '推荐', category_url: 'recommended' }]
     let currentCategoryItem = store.state.category.timelineCategoryList.filter(item => item.category_url === params.title)[0] || initCategoryList[0]
-    let [indexData, recommendAuthors] = await Promise.all([
+    let [indexData, authorList, bannerList] = await Promise.all([
       // 文章列表
       app.$api.getIndexList({
         cate_id: currentCategoryItem.category_id || '',
@@ -40,21 +44,23 @@ export default {
         sort_type: 200,
         feed_type: currentCategoryItem.category_id ? 'cate' : 'all',
       }).then(res => res.err_no == 0 ? res : {}),
-      // 推荐作者
-      app.$api.getRecommendAuthor({ 
-        limit: 5
-      }).then(res => res.err_no == 0 ? res.data : []),
+      // 右侧列表
+      app.$api.getAuthorBlock().then(res => res.meta.total !== 0 ? res.data : []),
+      // 右侧广告
+      app.$api.getBanerBlock().then(res => res.meta.total !== 0 ? res.data : [])
     ])
     // 列表下一页信息
     let pageInfo = {
       cursor: indexData.cursor,
       has_more: indexData.has_more
     }
+    console.log(bannerList)
     return {
       currentCategoryItem,
       list: indexData.data || [],
       pageInfo,
-      recommendAuthors
+      authorList,
+      bannerList
     };
   },
   head () {
@@ -77,8 +83,10 @@ export default {
   },
   mixins: [reachBottom],
   components: {
-    'author-rank': authorRank,
-    'timeline-category': timelineCategory
+    'timeline-category': timelineCategory,
+    'banner-block': bannerBlock,
+    'download-block': downloadBlock,
+    'author-block': authorBlock,
   },
   data() {
     return {
@@ -124,7 +132,8 @@ export default {
       tags: [],
       list: [],
       pageInfo: {},
-      recommendAuthors: [],
+      authorList: [],
+      bannerList: [],
       isReachBottomFetching: false,  // 防止触底多次请求
     };
   },
@@ -203,7 +212,7 @@ export default {
   height: 28px;
   display: flex;
   align-items: center;
-  
+
   .list__nav-item{
     display: inline-block;
     font-size: 14px;

@@ -1,25 +1,20 @@
 <template>
   <div class="author-block shadow">
     <div class="author-block__title">🎖️ 作者榜</div>
-    <nuxt-link :to="'/user/'+item.user_id" target="_blank" v-for="item in list" :key="item.user_id">
+    <div v-for="item in list" :key="item.id">
       <div class="author-item">
         <div class="author__avatar">
-          <user-avatar :url="item.avatar_large" :round="true"></user-avatar>
+          <user-avatar :url="getUrl(item.attributes.pic.data.attributes.url)" :round="true"></user-avatar>
         </div>
         <div class="author__info">
           <div class="author__name">
-            {{ item.user_name }}
-            <level :level="item.level"></level>
+            {{ item.attributes.name }}
+            <level :level="item.attributes.level"></level>
           </div>
-          <div class="ellipsis">
-            {{ item.job_title }}
-            {{ item.job_title && item.company ? '@' : '' }}
-            {{ item.company }}
-          </div>
-          <!-- <div class="ellipsis">{{ item.description }}</div> -->
+          <div class="ellipsis">{{ item.attributes.description }}</div>
         </div>
       </div>
-    </nuxt-link>
+    </div>
     <nuxt-link to="/recommendation/authors/recommended">
       <div class="author-block__footer">
         完整榜单
@@ -34,6 +29,11 @@ export default {
     list: {
       type: Array,
       default: () => []
+    }
+  },
+  methods: {
+    getUrl(url){
+      return `http://lzzzs.top:1337${url}`
     }
   }
 }

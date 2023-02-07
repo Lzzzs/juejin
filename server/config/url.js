@@ -1,3 +1,3 @@
 module.exports = {
-  apiJuejin: 'https://api.juejin.cn/'
+  apiJuejin: 'https://api.juejin.cn/',
 }
