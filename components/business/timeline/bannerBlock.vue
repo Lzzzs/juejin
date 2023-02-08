@@ -1,11 +1,11 @@
 <template>
-  <div class="sidebar-block banner-block">
+  <div class="sidebar-block banner-block" ref="banner">
     <div class="banner-body">
       <a href="https://juejin.cn/post/7185104994801025061?utm_source=web1&amp;utm_medium=banner&amp;utm_campaign=tlgt2023" target="_blank">
         <img :alt="banner.attributes.alt" :src="imgUrl" class="banner-image">
       </a>
       <div class="ctrl-box">
-        <i class="ion-close-round close-btn"></i>
+        <img class="close-btn" src="~/assets/images/close.svg" @click="close">
         <a class="label" href="https://bd.juejin.cn?utm_campaign=bd&amp;utm_source=web&amp;utm_medium=banner" target="_blank">
           <span class="inco">投放</span>
           <span>广告</span>
@@ -26,6 +26,11 @@ export default {
   computed: {
     imgUrl(){
       return "http://lzzzs.top:1337" + this.banner.attributes.pic.data.attributes.url
+    }
+  },
+  methods: {
+    close(e) {
+      this.$refs.banner.style.display = 'none'
     }
   }
 }
@@ -59,9 +64,9 @@ export default {
           position: absolute;
           top: 0.5rem;
           right: 0.5rem;
-          font-size: 1rem;
+          font-size: 0.1rem;
           color: #909090;
-          opacity: .5;
+          opacity: 0.5;
           display: none;
         }
         .label{
@@ -94,17 +99,11 @@ export default {
               }
             }
         }
-
       }
       &:hover{
-        .ctrl-box {
-          .close-btn{
-            color: #000;
-            width: 1rem;
-            height: 1rem;
-            opacity: 1.0;
-            display: block;
-          }
+        .close-btn{
+          opacity: 1;
+          display: block;
         }
       }
     }

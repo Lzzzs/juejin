@@ -113,9 +113,6 @@ export default ({ app: { $request } }, inject) => {
     },
     /**
      * 获取右侧作者
-     * @param {number} limit - 条数
-     * @param {number} cursor - 分页标识
-     * @param {string} category_id - 类目
      */
     getAuthorBlock(){
       return $request.get('/v2/recommends/authorBlock')

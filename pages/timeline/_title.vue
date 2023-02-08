@@ -54,7 +54,6 @@ export default {
       cursor: indexData.cursor,
       has_more: indexData.has_more
     }
-    console.log(bannerList)
     return {
       currentCategoryItem,
       list: indexData.data || [],
