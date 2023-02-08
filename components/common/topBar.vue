@@ -368,14 +368,28 @@ export default {
   position: relative;
 }
 .top_message {
+  // position: absolute;
+  // font-size: 14px;
+  // left: 20px;
+  // top: -10px;
+  // color:red;
+  // border: 1px solid #000;
+  // height: 15px;
+  // transform: scale(0.8,0.8);
   position: absolute;
-  font-size: 14px;
-  left: 20px;
-  top: -10px;
-  color:red;
-  border: 1px solid #000;
-  height: 15px;
-  transform: scale(0.8,0.8);
+  top: 5px;
+  left: 7px;
+  z-index: 9;
+  white-space: nowrap;
+  padding: 2px 7px;
+  background-color: #ee502f;
+  border-radius: 50px;
+  text-align: center;
+  font-weight: 500;
+  font-size: 16px;
+  transform: scale(.5);
+  line-height: 18px;
+  color: #fff;
 }
 .login-btn{
   margin-left: 20px;
