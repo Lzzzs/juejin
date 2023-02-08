@@ -4,6 +4,16 @@ const request = require('../../request')
 const { apiJuejin } = require('../../config/url')
 const validator = require('../../middleware/validator')
 
+// 获取标签页面
+router.get('/tags',async (ctx, next) => {
+  const options = {
+    url: `http://lzzzs.top:1337/api/tags`,
+    method: "GET",
+  };
+  let { body } = await request(options)
+  ctx.body = body
+})
+
 /**
  * 获取标签详情
  * @param {string} key_word

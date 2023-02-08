@@ -10,7 +10,9 @@
               :class="{'list__nav-item--active': item.id == navId}"
               v-for="item in navs"
               :key="item.title"
-              @click="changeNavType(item)">{{ item.title }}
+              @click="changeNavType(item)"
+            >
+              {{ item.title }}
             </li>
             <el-select v-if="navTypes.length" size="mini" style="width:100px" v-model="sort_type" placeholder="请选择" @change="changeNavType">
               <el-option v-for="item in navTypes" :key="item.title" :label="item.title" :value="item.type">

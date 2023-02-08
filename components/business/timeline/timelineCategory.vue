@@ -4,19 +4,22 @@
       <ul class="nav-list">
         <li class="nav-item" 
             :class="{'nav-item--active': item.category_url === paramsTitle}" 
-            v-for="item in channels" :key="item.category_id" 
-            @click="navItemClick(item)" ref='navItem'>
-            <span>{{ item.category_name }}</span>
+            v-for="item in channels" 
+            :key="item.category_id" 
+            @click="navItemClick(item)" 
+            ref="navItem"
+        >
+          <span>{{ item.category_name }}</span>
         </li>
         <nuxt-link v-if="token" tag="li" to="/subscribe" class="nav-item" style="margin-left: auto;">标签管理</nuxt-link>
       </ul>
-      <div class="show" ref='show'>
+      <div class="show" ref="show">
         <el-dropdown @command="handleCommand">
           <span class="el-dropdown-link">
             下拉菜单<i class="el-icon-arrow-down el-icon--right"></i>
           </span>
-          <el-dropdown-menu slot="dropdown" >
-            <el-dropdown-item :command="item" ref='navItem' v-for='item in arr' :key="item.category_id">{{ item.category_name }}</el-dropdown-item>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item :command="item" ref="navItem" v-for="item in arr" :key="item.category_id">{{ item.category_name }}</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </div>

@@ -182,6 +182,10 @@ export default ({ app: { $request } }, inject) => {
         followee: data.followee
       })
     },
+    // 获取标签
+    getTags(){
+      return $request.get('/v2/tags/tags')
+    },
     /**
      * 获取类目
      * @param {number} show_type 0：首页 1：作者排行榜 2：小册
