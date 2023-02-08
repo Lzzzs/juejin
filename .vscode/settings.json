@@ -6,5 +6,6 @@
     "commitlintrc",
     "juejin",
     "Prefixs"
-  ]
+  ],
+  "nuxt.isNuxtApp": true
 }

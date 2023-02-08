@@ -17,7 +17,9 @@ router.get('/entry', validator({
 }), async (ctx, next) => {
   let data = ctx.query 
   const options = {
-    url: `${apiJuejin}tag_api/v1/query_category_briefs`,
+    // http://lzzzs.top:1337/api/tags
+    // url: `${apiJuejin}tag_api/v1/query_category_briefs`,
+    url: `http://lzzzs.top:1337/api/header-tags`,
     method: "GET",
     params: {
       show_type: data.show_type

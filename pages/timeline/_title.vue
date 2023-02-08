@@ -73,12 +73,39 @@ export default {
     let initCategoryList = [{ category_id: 0, category_name: '推荐', category_url: 'recommended' }]
     let categoryList = []
     // 获取分类列表缓存
-    if (store.state.category.timelineCategoryList.length) {
-      categoryList = store.state.category.timelineCategoryList
-    } else {
-      categoryList = await app.$api.getCategories({ show_type: 0 }).then(res => res.err_no === 0 ? initCategoryList.concat(res.data) : initCategoryList)
+    // if (store.state.category.timelineCategoryList.length) {
+    //   categoryList = store.state.category.timelineCategoryList
+    //   console.log('if', categoryList);
+    // } else {
+      categoryList = await app.$api.getCategories({ show_type: 0 }).then(function(res) {
+        res = Array.from(res.data)
+        let arr = []
+        res.forEach((item) => {
+          item.attributes.icon = 'https://img1.baidu.com/it/u=1016138010,1907110459&fm=253&fmt=auto&app=138&f=JPEG'
+          item.attributes.back_ground = 'https://img.duoziwang.com/2017/05/10/B4433.jpg'
+          arr.push(item.attributes)
+        })
+        return initCategoryList.concat(arr);
+        // res.err_no === 0 ? initCategoryList.concat(res.data) : initCategoryList
+      })
       store.commit('category/UPDATE_TIMELINE_CATEGORY_LIST', categoryList)
-    }
+      console.log('else', categoryList);
+    // }
+      // categoryList = await app.$api.getCategories({ show_type: 0 }).then(res => res.err_no === 0 ? initCategoryList.concat(res.data) : initCategoryList)
+      // categoryList = await app.$api.getCategories()
+    //   store.commit('category/UPDATE_TIMELINE_CATEGORY_LIST', categoryList)
+      // console.log('else', categoryList);
+    // const fn = async() => {
+    //   let res = await axios.get('http://lzzzs.top:1337/api/header-tags')
+    //   res = Array.from(res.data)
+    //   let arr = []
+    //   res.forEach((item) => {
+    //     item.attributes.icon = 'https://img1.baidu.com/it/u=1016138010,1907110459&fm=253&fmt=auto&app=138&f=JPEG'
+    //     item.attributes.back_ground = 'https://img.duoziwang.com/2017/05/10/B4433.jpg'
+    //     arr.push(item.attributes)
+    //   })
+    //   return arr
+    // }
     return params.title === undefined || categoryList.filter(item => item.category_url === params.title).length
   },
   mixins: [reachBottom],
