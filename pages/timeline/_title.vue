@@ -5,7 +5,13 @@
       <div class="index-main shadow">
         <div class="list__header">
           <ul class="list__nav">
-            <li class="list__nav-item" :class="{'list__nav-item--active': item.id == navId}" v-for="item in navs" :key="item.title" @click="changeNavType(item)">{{ item.title }}</li>
+            <li
+              class="list__nav-item"
+              :class="{'list__nav-item--active': item.id == navId}"
+              v-for="item in navs"
+              :key="item.title"
+              @click="changeNavType(item)">{{ item.title }}
+            </li>
             <el-select v-if="navTypes.length" size="mini" style="width:100px" v-model="sort_type" placeholder="请选择" @change="changeNavType">
               <el-option v-for="item in navTypes" :key="item.title" :label="item.title" :value="item.type">
               </el-option>
@@ -69,7 +75,7 @@ export default {
     }
   },
   async validate ({ app, params, store }) {
-    // 分类列表
+    // 分类列表 tabs修改地方
     let initCategoryList = [{ category_id: 0, category_name: '推荐', category_url: 'recommended' }]
     let categoryList = []
     // 获取分类列表缓存
@@ -89,7 +95,6 @@ export default {
         // res.err_no === 0 ? initCategoryList.concat(res.data) : initCategoryList
       })
       store.commit('category/UPDATE_TIMELINE_CATEGORY_LIST', categoryList)
-      console.log('else', categoryList);
     // }
       // categoryList = await app.$api.getCategories({ show_type: 0 }).then(res => res.err_no === 0 ? initCategoryList.concat(res.data) : initCategoryList)
       // categoryList = await app.$api.getCategories()
