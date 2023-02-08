@@ -6,8 +6,23 @@
           <img src="~assets/images/png/logo.svg" alt="掘金">
         </nuxt-link>
         <ul class="navs">
-          <nuxt-link v-for="item in navs" :key="item.id" :to="item.link" tag="li" class="nav-item">{{ $t('topbar.'+item.name) }}</nuxt-link>
+          <nuxt-link v-for="item in navList" :key="item.id" :to="item.link" tag="li" class="nav-item">
+            <div class="position_div">
+              <span>{{ $t('topbar.'+item.name) }}</span>
+              <span class="top_message" v-if="item.topContent">{{ item.topContent }}</span>
+            </div>
+          </nuxt-link>
         </ul>
+        <div class="show" ref="show">
+          <el-dropdown @command="handleCommand">
+            <span class="el-dropdown-link">
+              下拉菜单<i class="el-icon-arrow-down el-icon--right"></i>
+            </span>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item :command="item" ref="navItem" v-for="(item, index) in arr" :key="index">{{ item.name }}</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+        </div>
         <div class="search-form" :class="[searchFormClass]">
           <input class="search-input" type="text" @focus="searchFormClass = 'search-form--focus'" @blur="searchFormClass = ''" maxlength="32" v-model="keyword" :placeholder="$t('topbar.search')" @keydown.enter="sreachHandler" />
           <img v-show="searchFormClass" src="~/assets/images/search-icon-active.svg" class="search-icon" />
@@ -77,9 +92,24 @@ export default {
       searchFormClass: '',
       noticeNum: 0,
       isShowNavMenu: false,
-
+      navList: [],
+      arr: [],
+      resArr: []
     }
   },
+  async fetch() {
+    let res = await this.$api.getTags()
+    this.resArr = Array.from(res.data)
+    this.resArr.forEach((item) => {
+      this.navList.push(item.attributes)
+    })
+    this.navList.forEach((item, index) => {
+    if (index > 3) {
+      this.arr.push(item)
+      }
+    })
+  },
+
   mounted() {
     let scrollingElement = document.scrollingElement
     let scrollTop = 0
@@ -124,6 +154,10 @@ export default {
     }
   },
   methods: {
+    // 下拉菜单
+    handleCommand(command) {
+      this.$router.push(command.link)
+    },
     ...mapMutations({
       'UPDATE_TOPBAR_BLOCK': 'UPDATE_TOPBAR_BLOCK',
       'SET_LANG': 'locale/SET_LANG'
@@ -311,7 +345,7 @@ export default {
       color: #71777c;
       white-space: nowrap;
       cursor: pointer;
-
+      position: relative;
       .nav-item__icon{
         width: 15px;
         height: 15px;
@@ -330,9 +364,57 @@ export default {
     }
   }
 }
+.position_div {
+  position: relative;
+}
+.top_message {
+  // position: absolute;
+  // font-size: 14px;
+  // left: 20px;
+  // top: -10px;
+  // color:red;
+  // border: 1px solid #000;
+  // height: 15px;
+  // transform: scale(0.8,0.8);
+  position: absolute;
+  top: 5px;
+  left: 7px;
+  z-index: 9;
+  white-space: nowrap;
+  padding: 2px 7px;
+  background-color: #ee502f;
+  border-radius: 50px;
+  text-align: center;
+  font-weight: 500;
+  font-size: 16px;
+  transform: scale(.5);
+  line-height: 18px;
+  color: #fff;
+}
 .login-btn{
   margin-left: 20px;
   color: $theme;
   cursor: pointer;
 }
+.navs {
+  width: 300px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  position: relative;
+  height: 50px;
+  white-space: nowrap;
+}
+// element
+  .el-dropdown-link {
+    cursor: pointer;
+    color: #409EFF;
+  }
+  .el-icon-arrow-down {
+    font-size: 12px;
+  }
+  .show {
+    text-align: center;
+    margin-left: 20px;
+  }
 </style>

@@ -2,9 +2,27 @@
   <nav class="nav-view">
     <div class="nav-mian shadow" :class="{'nav-main--sticky': !isTopbarBlock}">
       <ul class="nav-list">
-        <li class="nav-item" :class="{'nav-item--active': item.category_url === paramsTitle}" v-for="item in channels" :key="item.category_id" @click="navItemClick(item)">{{ item.category_name }}</li>
+        <li class="nav-item" 
+            :class="{'nav-item--active': item.category_url === paramsTitle}" 
+            v-for="item in channels" 
+            :key="item.category_id" 
+            @click="navItemClick(item)" 
+            ref="navItem"
+        >
+          <span>{{ item.category_name }}</span>
+        </li>
         <nuxt-link v-if="token" tag="li" to="/subscribe" class="nav-item" style="margin-left: auto;">标签管理</nuxt-link>
       </ul>
+      <div class="show" ref="show">
+        <el-dropdown @command="handleCommand">
+          <span class="el-dropdown-link">
+            下拉菜单<i class="el-icon-arrow-down el-icon--right"></i>
+          </span>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item :command="item" ref="navItem" v-for="item in arr" :key="item.category_id">{{ item.category_name }}</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+      </div>
     </div>
   </nav>
 </template>
@@ -12,10 +30,27 @@
 <script>
 import { mapState, mapMutations } from 'vuex'
 export default {
+  data() {
+    return {
+      arr: []
+    }
+  },
   props: {
     channels: {
       type: Array,
       default: () => []
+    }
+  },
+  created() {
+      this.channels.forEach((item, index) => {
+        if (index > 4) {
+          this.arr.push(item)
+        }
+      })
+  },
+  mounted() {
+    if (this.channels.length < 5) {
+      this.$refs.show.style.display = 'none'
     }
   },
   computed: {
@@ -30,6 +65,9 @@ export default {
     }
   },
   methods: {
+    handleCommand(command) {
+      this.navItemClick(command)
+    },
     ...mapMutations([
       'UPDATE_TOPBAR_BLOCK'
     ]),
@@ -69,22 +107,33 @@ export default {
   background: #fff;
   border-top: 1px solid #eee;
   transition: all .2s;
-
+  display: flex;
+  align-items: center;
   &.nav-main--sticky{
     top: 0px;
+  }
+  .show {
+    margin-left: 100px;
   }
 }
 
 .nav-list{
   display: flex;
-  width: 960px;
-  margin: 0 auto;
-
+  margin-left: 250px;
+  width: 400px;
+  height: 40px;
+  overflow: hidden;
+  position: relative;
   .nav-item{
     padding: 15px 0;
     font-size: 14px;
     color: #71777c;
     cursor: pointer;
+    display: flex;
+    width: 70px;
+    span {
+      width: 70px;
+    }
 
     &.nav-item--active,
     &:hover{
@@ -95,5 +144,16 @@ export default {
       margin-right: 24px;
     }
   }
+  .show-item {
+    display: none;
+  }
 }
+// element
+  .el-dropdown-link {
+    cursor: pointer;
+    color: #409EFF;
+  }
+  .el-icon-arrow-down {
+    font-size: 12px;
+  }
 </style>
