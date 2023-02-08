@@ -38,7 +38,7 @@ export default ({ app: { $request } }, inject) => {
     },
     /**
      * 获取详情页信息
-     * @param {string} article_id - 文章id 
+     * @param {string} article_id - 文章id
      */
     getDetail (params = {}) {
       return $request.get('/v2/articles/detail', params)
@@ -112,10 +112,22 @@ export default ({ app: { $request } }, inject) => {
       return $request.get('/v2/articles/userPost', params)
     },
     /**
-     * 获取推荐作者
+     * 获取右侧作者
      * @param {number} limit - 条数
      * @param {number} cursor - 分页标识
      * @param {string} category_id - 类目
+     */
+    getAuthorBlock(){
+      return $request.get('/v2/recommends/authorBlock')
+    },
+    /**
+     * 获取右侧广告
+     */
+    getBanerBlock(){
+      return $request.get('/v2/recommends/banerBlock')
+    },
+    /**
+     * 获取推荐作者
      */
     getRecommendAuthor(params = {}){
       return $request.get('/v2/recommends/recommendAuthor', params)
@@ -165,10 +177,14 @@ export default ({ app: { $request } }, inject) => {
      * @param {string} followee - 被关注者id
      */
     followUser(data = {}){
-      return $request[data.method]('/v2/users/follow', { 
-        follower: data.follower, 
+      return $request[data.method]('/v2/users/follow', {
+        follower: data.follower,
         followee: data.followee
       })
+    },
+    // 获取标签
+    getTags(){
+      return $request.get('/v2/tags/tags')
     },
     /**
      * 获取类目
@@ -211,10 +227,10 @@ export default ({ app: { $request } }, inject) => {
     },
     /**
      * 关注标签
-     * @param {string} tagId 
+     * @param {string} tagId
      */
     followTag(data = {}){
-      return $request[data.method]('/v2/tags/subscribe', { 
+      return $request[data.method]('/v2/tags/subscribe', {
         tagId: data.tagId
       })
     },
@@ -247,10 +263,10 @@ export default ({ app: { $request } }, inject) => {
     },
     /**
      * 关注话题
-     * @param {string} topicId 
+     * @param {string} topicId
      */
     followTopic(data = {}){
-      return $request[data.method]('/v2/topics/follow', { 
+      return $request[data.method]('/v2/topics/follow', {
         topicIds: data.topicIds
       })
     },
@@ -316,7 +332,7 @@ export default ({ app: { $request } }, inject) => {
      * 沸点点赞、取消点赞
      */
     likePin(data = {}) {
-      return $request[data.method]('/v2/pins/like', { 
+      return $request[data.method]('/v2/pins/like', {
         pinId: data.pinId
       })
     },
