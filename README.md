@@ -48,5 +48,3 @@ pnpm commit
 | ci       | 自动化流程配置修改、与 CI（持续集成服务）有关的改动                                                  |
 | chore    | 构建过程或辅助工具的变动、不修改 src 或者 test 的其余修改                                            |
 | revert   | 回滚到上一个版本                                                                                     |
-
-myz 0209 test
