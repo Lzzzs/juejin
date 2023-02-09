@@ -135,7 +135,6 @@ export default ({ app: { $request } }, inject) => {
      * @param {number} tag_id - 分类标签的id
      */
     getRelatedEntry(params = {}){
-      console.log("api里面的方法调用了")
       let res = $request.get('/v2/articles/relatedEntry', params)
       return res
     },

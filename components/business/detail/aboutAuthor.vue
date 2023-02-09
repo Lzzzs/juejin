@@ -4,7 +4,6 @@
     <div class="author__main">
       <nuxt-link :to="'/user/'+info.attributes.author.data.id" class="author__info-block" target="_blank">
         <div class="author__avatar">
-<!--          <user-avatar :url="info.author_user_info.avatar_large" :round="true"></user-avatar>-->
         </div>
         <div class="author__info">
           <div class="author__username">
