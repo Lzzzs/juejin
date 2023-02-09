@@ -74,7 +74,7 @@ export default {
     // 在开发的时候这里是写死的2
     const articDetail = await app.$api
       .getDetail({
-        article_id: 2,
+        article_id: params.id,
       })
       .then((res) => res.data);
 
