@@ -13,11 +13,8 @@ router.get('/detail', validator({
 }), async (ctx, next) => {
   const data = ctx.query
   const options = {
-    url: `${apiJuejin}content_api/v1/article/detail`,
-    method: "POST",
-    body: {
-      article_id: data.article_id
-    }
+    url: `http://lzzzs.top:1337/api/articles/${data.article_id}?populate=deep`,
+    method: "GET",
   };
   let { body } = await request(options);
   ctx.body = body
@@ -99,37 +96,18 @@ router.get('/userPost', validator({
 
 /**
  * 获取相关文章
- * @param {string} item_id - 文章id
- * @param {string} user_id - 用户id
- * @param {array} tag_ids - 标签id
+ * @param {array} tag_id - 标签id
  */
-router.post('/relatedEntry', validator({
-  item_id: { 
-    type: 'string', 
-    required: true,
-  },
-  tag_ids: {
-    type: 'array',
-    required: true
-  },
-  user_id: { 
-    type: 'string', 
-    required: true,
-  },
+router.get('/relatedEntry', validator({
+  tag_id: { type: 'string', required: true }
 }), async (ctx, next) => {
-  const data = ctx.request.body
+  // console.log("articles里面的relatedEntry方法调用了")
+  const data = ctx.query
   const options = {
-    url: `${apiJuejin}recommend_api/v1/article/recommend_article_detail_feed`,
-    method: "POST",
-    body: { 
-      cursor: "0",
-      id_type: 2,
-      item_id: data.item_id,
-      tag_ids: data.tag_ids,
-      user_id: data.user_id
-    }
+    url: `http://lzzzs.top:1337/api/header-tags/${data.tag_id}?populate=deep`,
+    method: "GET",
   };
-  let { body } = await request(options)
+  let { body } = await request(options);
   ctx.body = body
 })
 
