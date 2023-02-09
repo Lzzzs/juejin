@@ -92,20 +92,39 @@ export default {
       searchFormClass: '',
       noticeNum: 0,
       isShowNavMenu: false,
-      navList: [],
+      navList: [
+        {
+          name: 'home',
+          link: '/timeline'
+        },
+        {
+          name: 'pin',
+          link: '/pins/recommend'
+        },
+        {
+          name: 'topic',
+          link: '/topic'
+        },
+        {
+          name: 'book',
+          link: '/book'
+        }
+      ],
       arr: [],
       resArr: []
     }
   },
   async fetch() {
+    console.log('fetch');
     let res = await this.$api.getTags()
     this.resArr = Array.from(res.data)
+    let that = this
     this.resArr.forEach((item) => {
-      this.navList.push(item.attributes)
+      that.navList.push(item.attributes)
     })
-    this.navList.forEach((item, index) => {
+    this.navList.forEach(function (item, index) {
     if (index > 3) {
-      this.arr.push(item)
+      that.arr.push(item)
       }
     })
   },
