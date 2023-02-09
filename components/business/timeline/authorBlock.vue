@@ -4,14 +4,18 @@
     <div v-for="item in list" :key="item.id">
       <div class="author-item">
         <div class="author__avatar">
-          <user-avatar :url="getUrl(item.attributes.pic.data.attributes.url)" :round="true"></user-avatar>
+          <user-avatar :url="getUrl(item.attributes.avatar_large.data.attributes.url)" :round="true"></user-avatar>
         </div>
         <div class="author__info">
           <div class="author__name">
-            {{ item.attributes.name }}
+            {{ item.attributes.user_name }}
             <level :level="item.attributes.level"></level>
           </div>
-          <div class="ellipsis">{{ item.attributes.description }}</div>
+          <div class="ellipsis">
+            {{ item.attributes.job_title }}
+            {{ item.attributes.job_title && item.attributes.company ? '@' : '' }}
+            {{ item.attributes.company }}
+          </div>
         </div>
       </div>
     </div>
