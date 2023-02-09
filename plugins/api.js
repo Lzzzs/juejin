@@ -41,7 +41,8 @@ export default ({ app: { $request } }, inject) => {
      * @param {string} article_id - 文章id
      */
     getDetail (params = {}) {
-      return $request.get('/v2/articles/detail', params)
+      let res = $request.get('/v2/articles/detail', params)
+      return res
     },
     /**
      * 评论列表
@@ -131,12 +132,12 @@ export default ({ app: { $request } }, inject) => {
     },
     /**
      * 获取相关文章
-     * @param {string} item_id - 文章id
-     * @param {string} user_id - 用户id
-     * @param {array} tag_ids - 标签id
+     * @param {number} tag_id - 分类标签的id
      */
-    getRelatedEntry(data = {}){
-      return $request.post('/v2/articles/relatedEntry', data)
+    getRelatedEntry(params = {}){
+      console.log("api里面的方法调用了")
+      let res = $request.get('/v2/articles/relatedEntry', params)
+      return res
     },
   /**
    * 根据标签id获取相关推荐文章
