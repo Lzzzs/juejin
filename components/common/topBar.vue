@@ -92,24 +92,7 @@ export default {
       searchFormClass: '',
       noticeNum: 0,
       isShowNavMenu: false,
-      navList: [
-        {
-          name: 'home',
-          link: '/timeline'
-        },
-        {
-          name: 'pin',
-          link: '/pins/recommend'
-        },
-        {
-          name: 'topic',
-          link: '/topic'
-        },
-        {
-          name: 'book',
-          link: '/book'
-        }
-      ],
+      navList: [],
       arr: [],
       resArr: []
     }
