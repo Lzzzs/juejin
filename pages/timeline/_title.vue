@@ -53,9 +53,9 @@ export default {
         feed_type: currentCategoryItem.category_id ? 'cate' : 'all',
       }).then(res => res.err_no == 0 ? res : {}),
       // 右侧作者列表
-      app.$api.getAuthorBlock().then(res => res.meta.total !== 0 ? res.data : []),
-      // 右侧广告
-      app.$api.getBanerBlock().then(res => res.meta.total !== 0 ? res.data : [])
+      app.$api.getAuthorBlock().then(res => res.meta.total !== 0 ? res.data.slice(0, 3) : []),
+      // 右侧广告	  
+      app.$api.getBanerBlock().then(res => res.meta.total !== 0 ? res.data.slice(0, 2) : []),
     ])
     // 列表下一页信息
     let pageInfo = {
