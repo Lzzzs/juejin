@@ -2,30 +2,29 @@
   <div class="about-author shadow" v-if="info">
     <div class="about-author__title">关于作者</div>
     <div class="author__main">
-      <nuxt-link :to="'/user/'+info.author_user_info.user_id" class="author__info-block" target="_blank">
+      <nuxt-link :to="'/user/'+info.attributes.author.data.id" class="author__info-block" target="_blank">
         <div class="author__avatar">
-          <user-avatar :url="info.author_user_info.avatar_large" :round="true"></user-avatar>
         </div>
         <div class="author__info">
           <div class="author__username">
-            {{ info.author_user_info.user_name }}
-            <level :level="info.author_user_info.level"></level>
+            {{ info.attributes.author.data.attributes.user_name }}
+            <level :level="info.attributes.author.data.attributes.level"></level>
           </div>
           <div class="author__job ellipsis">
-            {{ info.author_user_info.job_title }}
-            {{ info.author_user_info.job_title && info.author_user_info.company ? '@' : '' }}
-            {{ info.author_user_info.company }}
+            {{ info.attributes.author.data.attributes.job_title }}
+            {{ info.attributes.author.data.attributes.job_title && info.attributes.author.data.attributes.company ? '@' : '' }}
+            {{ info.attributes.author.data.attributes.company }}
           </div>
         </div>
       </nuxt-link>
       <div class="author__meta">
         <div class="honor-item">
           <img class="honor-item__icon shadow" src="~/assets/images/honor-4.svg" />
-          <span class="honor-item__title">获得点赞 {{ info.author_user_info.got_digg_count }}</span>
+          <span class="honor-item__title">获得点赞 {{ info.attributes.author.data.attributes.got_digg_count }}</span>
         </div>
         <div class="honor-item">
           <img class="honor-item__icon shadow" src="~/assets/images/honor-5.svg" />
-          <span class="honor-item__title">文章被阅读 {{ info.author_user_info.got_view_count }}</span>
+          <span class="honor-item__title">文章被阅读 {{ info.attributes.author.data.attributes.got_view_count }}</span>
         </div>
       </div>
     </div>
@@ -64,7 +63,7 @@ export default {
     .honor-item{
       display: flex;
       align-items: center;
-      
+
       &:not(:last-child){
         margin-bottom: 10px;
       }
@@ -82,7 +81,7 @@ export default {
       }
     }
   }
-  
+
   .author__info-block{
     display: flex;
     cursor: pointer;

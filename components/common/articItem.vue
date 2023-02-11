@@ -2,44 +2,38 @@
   <div class="artic-item" @click="toDetail()">
     <div class="artic-item__info">
       <ul class="artic-item__meta">
-        <!-- <li class="meta-item mate-item--hot" v-if="item.type === 'post' && item.hot">
-          <span>荐</span>
-        </li>
-        <li class="meta-item mate-item--post" v-if="item.type === 'post'">
-          <span>专栏</span>
-        </li> -->
         <li class="meta-item">
           <span class="meta-item__username">
-            <nuxt-link :to="'/user/'+uid" target="_blank" @click.native="(e) => e.stopPropagation()">{{ item.author_user_info.user_name }}</nuxt-link>
+            <nuxt-link :to="'/user/'+uid" target="_blank" @click.native="(e) => e.stopPropagation()">{{ item.attributes.author.data.attributes.user_name }}</nuxt-link>
           </span>
         </li>
-        <li class="meta-item">{{ item.article_info.ctime | formatTime }}</li>
-        <li class="meta-item">
+        <li class="meta-item">{{ item.attributes.ctime | formatTime }}</li>
+        <!-- <li class="meta-item">
           <template v-if="item.tags.length">
             <nuxt-link class="meta-item__tag" :to="'/tag?name='+tag.tag_name" v-for="tag in item.tags" :key="tag.id" target="_blank" @click.native="(e) => e.stopPropagation()">{{ tag.tag_name }}</nuxt-link>
           </template>
-        </li>
+        </li> -->
       </ul>
-      <p class="artic-item__title ellipsis" v-html="highlight.title || item.article_info.title"></p>
-      <p v-if="hasDesc" class="artic-item__desc" v-html="highlight.description || highlight.text || item.article_info.brief_content"></p>
-      <ul class="artic-item__action">
-        <li class="action-item" :class="{active: item.article_info[likeField]}" @click.stop="articleLike">
-          <img v-if="item.article_info[likeField]" class="action-item__icon" src="~assets/images/png/like.png">
+      <p class="artic-item__title ellipsis" v-html="highlight.title || item.attributes.title"></p>
+      <p class="artic-item__desc" v-html="highlight.description || highlight.text || item.attributes.brief_content"></p>
+      <!-- <ul class="artic-item__action">
+        <li class="action-item" :class="{active: item.attributes[likeField]}" @click.stop="articleLike">
+          <img v-if="item.attributes[likeField]" class="action-item__icon" src="~assets/images/png/like.png">
           <img v-else class="action-item__icon" src="~assets/images/png/like.png">
-          {{ item.article_info[likeCountField] }}
+          {{ item.attributes[likeCountField] }}
         </li>
         <li class="action-item" @click.stop="toDetail('#comment')">
           <img class="action-item__icon" src="~assets/images/png/comment.png">
-          {{ item.article_info.comment_count }}
+          {{ item.attributes.comment_count }}
         </li>
-      </ul>
+      </ul> -->
     </div>
-    <div v-if="item.article_info.cover_image" class="artic-item__cover" :style="'background-image: url('+item.article_info.cover_image+')'"></div>
+    <img v-if="item.attributes.cover_image" :src="getUrl(item.attributes.cover_image.data.attributes.url)" class="artic-item__cover"/>
   </div>
 </template>
 
 <script>
-export default {
+export default {  
   props: {
     item: {
       type: Object,
@@ -63,17 +57,20 @@ export default {
     // 点赞数字段不一致  此处筛选出对应字段
     likeCountField() {
       let fields = ['digg_count']
-      return fields.filter(key => this.item.article_info[key] == undefined ? false : key)[0]
+      return fields.filter(key => this.item.attributes[key] == undefined ? false : key)[0]
     },
     // 统一 uid值
     uid() {
-      return this.item.author_user_info.user_id
+      return this.item.attributes.author.data.id
     },
     detailId() {
       return this.item.article_id
     }
   },
   methods: {
+    getUrl(url){
+      return `http://lzzzs.top:1337${url}`
+    },
     toDetail(hash = '') {
       let routeUrl = this.$router.resolve({
         name: 'detail-id',
@@ -127,9 +124,9 @@ export default {
 
 .artic-item__cover {
   flex: 0 0 auto;
-  width: 60px;
-  height: 60px;
-  margin-left: 30px;
+  width: 120px;
+  height: 80px;
+  margin-left: 24px;
   background-color: #f4f4f4;
   background-size: cover;
   background-position: center;
@@ -145,7 +142,7 @@ export default {
 
   .meta-item {
     &::after {
-      content: "·";
+      content: "|";
       margin: 0 5px;
       color: #b2bac2;
     }

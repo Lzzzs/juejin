@@ -23,7 +23,7 @@ export default ({ app: { $request } }, inject) => {
      * @param {string} feed_type - all：推荐，cate：分类
      */
     getIndexList (data = {}) {
-      return $request.post('/v2/articles/indexList', data)
+      return $request.get('/v2/articles/indexList', data)
     },
     /**
      * 搜索
@@ -41,7 +41,8 @@ export default ({ app: { $request } }, inject) => {
      * @param {string} article_id - 文章id
      */
     getDetail (params = {}) {
-      return $request.get('/v2/articles/detail', params)
+      let res = $request.get('/v2/articles/detail', params)
+      return res
     },
     /**
      * 评论列表
@@ -113,9 +114,6 @@ export default ({ app: { $request } }, inject) => {
     },
     /**
      * 获取右侧作者
-     * @param {number} limit - 条数
-     * @param {number} cursor - 分页标识
-     * @param {string} category_id - 类目
      */
     getAuthorBlock(){
       return $request.get('/v2/recommends/authorBlock')
@@ -134,12 +132,11 @@ export default ({ app: { $request } }, inject) => {
     },
     /**
      * 获取相关文章
-     * @param {string} item_id - 文章id
-     * @param {string} user_id - 用户id
-     * @param {array} tag_ids - 标签id
+     * @param {number} tag_id - 分类标签的id
      */
-    getRelatedEntry(data = {}){
-      return $request.post('/v2/articles/relatedEntry', data)
+    getRelatedEntry(params = {}){
+      let res = $request.get('/v2/articles/relatedEntry', params)
+      return res
     },
   /**
    * 根据标签id获取相关推荐文章

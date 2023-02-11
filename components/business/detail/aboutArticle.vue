@@ -1,18 +1,10 @@
 <template>
   <div class="about-article shadow">
     <div class="about-article__title">相关文章</div>
-    <nuxt-link v-for="item in list" :key="item.article_id" :to="'/detail/'+item.article_id" target="_blank">
+    <nuxt-link v-for="item in list" :key="item.id" :to="'/detail/'+item.id" target="_blank">
       <div class="article-item">
-        <div class="article__title">{{ item.article_info.title }}</div>
+        <div class="article__title">{{ item.attributes.title }}</div>
         <div class="article__meta">
-          <div class="meta-item">
-            <img class="meta-item__icon" src="~assets/images/png/like.png">
-            {{ item.article_info.digg_count }}
-          </div>
-          <div class="meta-item">
-            <img class="action-item__icon" src="~assets/images/png/comment.png">
-            {{ item.article_info.comment_count }}
-          </div>
         </div>
       </div>
     </nuxt-link>
@@ -21,6 +13,7 @@
 
 <script>
 export default {
+  // 参数是别的地方传过来的
   props: {
     list: {
       type: Array,

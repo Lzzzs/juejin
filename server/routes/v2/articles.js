@@ -13,11 +13,8 @@ router.get('/detail', validator({
 }), async (ctx, next) => {
   const data = ctx.query
   const options = {
-    url: `${apiJuejin}content_api/v1/article/detail`,
-    method: "POST",
-    body: {
-      article_id: data.article_id
-    }
+    url: `http://lzzzs.top:1337/api/articles/${data.article_id}?populate=deep`,
+    method: "GET",
   };
   let { body } = await request(options);
   ctx.body = body
@@ -31,46 +28,55 @@ router.get('/detail', validator({
  * @param {string} sort_type - 0：全部、3：三天内、7：7天内、30：30天内、200：热门、300：最新
  * @param {string} feed_type - all：推荐，cate：分类
  */
-router.post('/indexList', validator({
-  cate_id: { 
-    type: 'string'
-  },
-  cursor: { 
-    type: 'string'
-  },
-  limit: { 
-    type: 'string', 
-    requried: true,
-    validator: (rule, value) => Number(value) > 0,
-    message: 'limit 需传入正整数'
-  },
-  sort_type: {
-    type: 'enum',
-    requried: true,
-    enum: [0, 3, 7, 30, 200, 300]
-  },
-  feed_type: {
-    type: 'enum',
-    required: true,
-    enum: ['all', 'cate']
-  }
+router.get('/indexList', validator({
 }), async (ctx, next) => {
-  const data = ctx.request.body
-  const apiName = data.cate_id ? 'recommend_cate_feed' : 'recommend_all_feed'
   const options = {
-    url: `${apiJuejin}recommend_api/v1/article/${apiName}`,
-    method: "POST",
-    body: { 
-      cate_id: data.cate_id || '',
-      limit: data.limit || 20, 
-      sort_type: Number(data.sort_type) || 200,
-      cursor: data.cursor || '0',
-      id_type: 2
-    }
+    url: `http://lzzzs.top:1337/api/articles/?populate=deep`,
+    method: "GET",
   };
-  let { body } = await request(options)
+  let { body } = await request(options);
   ctx.body = body
 })
+// router.post('/indexList', validator({
+//   cate_id: { 
+//     type: 'string'
+//   },
+//   cursor: { 
+//     type: 'string'
+//   },
+//   limit: { 
+//     type: 'string', 
+//     requried: true,
+//     validator: (rule, value) => Number(value) > 0,
+//     message: 'limit 需传入正整数'
+//   },
+//   sort_type: {
+//     type: 'enum',
+//     requried: true,
+//     enum: [0, 3, 7, 30, 200, 300]
+//   },
+//   feed_type: {
+//     type: 'enum',
+//     required: true,
+//     enum: ['all', 'cate']
+//   }
+// }), async (ctx, next) => {
+//   const data = ctx.request.body
+//   const apiName = data.cate_id ? 'recommend_cate_feed' : 'recommend_all_feed'
+//   const options = {
+//     url: `${apiJuejin}recommend_api/v1/article/${apiName}`,
+//     method: "POST",
+//     body: { 
+//       cate_id: data.cate_id || '',
+//       limit: data.limit || 20, 
+//       sort_type: Number(data.sort_type) || 200,
+//       cursor: data.cursor || '0',
+//       id_type: 2
+//     }
+//   };
+//   let { body } = await request(options)
+//   ctx.body = body
+// })
 
 /**
  * 获取用户专栏文章
@@ -99,37 +105,18 @@ router.get('/userPost', validator({
 
 /**
  * 获取相关文章
- * @param {string} item_id - 文章id
- * @param {string} user_id - 用户id
- * @param {array} tag_ids - 标签id
+ * @param {array} tag_id - 标签id
  */
-router.post('/relatedEntry', validator({
-  item_id: { 
-    type: 'string', 
-    required: true,
-  },
-  tag_ids: {
-    type: 'array',
-    required: true
-  },
-  user_id: { 
-    type: 'string', 
-    required: true,
-  },
+router.get('/relatedEntry', validator({
+  tag_id: { type: 'string', required: true }
 }), async (ctx, next) => {
-  const data = ctx.request.body
+  // console.log("articles里面的relatedEntry方法调用了")
+  const data = ctx.query
   const options = {
-    url: `${apiJuejin}recommend_api/v1/article/recommend_article_detail_feed`,
-    method: "POST",
-    body: { 
-      cursor: "0",
-      id_type: 2,
-      item_id: data.item_id,
-      tag_ids: data.tag_ids,
-      user_id: data.user_id
-    }
+    url: `http://lzzzs.top:1337/api/header-tags/${data.tag_id}?populate=deep`,
+    method: "GET",
   };
-  let { body } = await request(options)
+  let { body } = await request(options);
   ctx.body = body
 })
 
@@ -141,11 +128,11 @@ router.post('/relatedEntry', validator({
  * @param {array} tag_ids - 标签id
  */
 router.post('/recommendEntryByTagIds', validator({
-  item_id: { 
+  item_id: {
     type: 'string',
     required: true
   },
-  cursor: { 
+  cursor: {
     type: 'string'
   },
   sort_type: {
@@ -162,7 +149,7 @@ router.post('/recommendEntryByTagIds', validator({
   const options = {
     url: `${apiJuejin}recommend_api/v1/article/recommend_tag_feed`,
     method: "POST",
-    body: { 
+    body: {
       cursor: data.cursor || '',
       id_type: 2,
       item_id: data.item_id,
@@ -184,8 +171,8 @@ router.post('/recommendEntryByTagIds', validator({
  */
 router.get('/search', validator({
   id_type: { type: 'enum', required: true, enum: ['0', '2', '9', '1'] },
-  limit: { 
-    type: 'string', 
+  limit: {
+    type: 'string',
     required: true,
     validator: (rule, value) => Number(value) > 0,
     message: 'first 需传入正整数'
@@ -198,7 +185,7 @@ router.get('/search', validator({
   const options = {
     url: `${apiJuejin}search_api/v1/search`,
     method: "POST",
-    body: { 
+    body: {
       cursor: data.cursor || "0",
       id_type: Number(data.id_type),
       key_word: data.key_word,
