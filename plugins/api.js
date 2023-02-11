@@ -23,7 +23,7 @@ export default ({ app: { $request } }, inject) => {
      * @param {string} feed_type - all：推荐，cate：分类
      */
     getIndexList (data = {}) {
-      return $request.post('/v2/articles/indexList', data)
+      return $request.get('/v2/articles/indexList', data)
     },
     /**
      * 搜索

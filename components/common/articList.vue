@@ -1,13 +1,16 @@
 <template>
   <div class="artic-list">
-    <template v-for="(item, index) in list">
-      <div v-if="item.item_type == 2" class="artic-item--border" :key="index">
+    <ul v-for="item in list" :key="item.article_id">
+      <li class="artic-item--border">
+        <artic-item :item.sync="item"></artic-item>
+      </li>
+      <!-- <div v-if="item.item_type == 2" class="artic-item--border" :key="index">
         <artic-item :item.sync="list[index].item_info"></artic-item>
       </div>
       <div v-else-if="item.item_type == undefined" class="artic-item--border" :key="index">
         <artic-item :item.sync="list[index]"></artic-item>
-      </div>
-    </template>
+      </div> -->
+    </ul>
   </div>
 </template>
 
@@ -38,7 +41,7 @@ export default {
 .artic-list {
   background-color: #fff;
 
-  .artic-item--border:not(:last-child){
+  .artic-item--border:not(:last-child) {
     border-bottom: 1px solid #eee;
   }
 }
