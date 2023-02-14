@@ -431,4 +431,15 @@ export default {
     }
   }
 }
+
+@media screen and (max-width: 980px) {
+  .detail-side {
+    display: none;
+  }
+
+  .detail-main {
+    flex: 1;
+    margin-left: 20px;
+  }
+}
 </style>
