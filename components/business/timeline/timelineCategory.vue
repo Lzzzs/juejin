@@ -2,11 +2,11 @@
   <nav class="nav-view">
     <div class="nav-mian shadow" :class="{'nav-main--sticky': !isTopbarBlock}">
       <ul class="nav-list">
-        <li class="nav-item" 
-            :class="{'nav-item--active': item.category_url === paramsTitle}" 
-            v-for="item in channels" 
-            :key="item.category_id" 
-            @click="navItemClick(item)" 
+        <li class="nav-item"
+            :class="{'nav-item--active': item.category_url === paramsTitle}"
+            v-for="item in channels"
+            :key="item.category_id"
+            @click="navItemClick(item)"
             ref="navItem"
         >
           <span>{{ item.category_name }}</span>
@@ -156,4 +156,26 @@ export default {
   .el-icon-arrow-down {
     font-size: 12px;
   }
+
+@media screen and (max-width: 840px) {
+  .nav-list {
+    padding: 0px 30px;
+    margin: 0px;
+  }
+  .nav-item {
+    margin-right: 2rem !important;
+  }
+  .nav-mian {
+    padding-right: 20px;
+  }
+}
+@media screen and (max-width: 520px) {
+  .nav-item {
+    margin-right: 1rem !important;
+    width: 50px !important;
+  }
+  .show {
+    width: 60px
+  }
+}
 </style>

@@ -419,4 +419,13 @@ export default {
     text-align: center;
     margin-left: 20px;
   }
+
+@media screen and (max-width: 980px) {
+  .search-form {
+    display: none;
+  }
+  .topbar {
+    padding: 0px 20px;
+  }
+}
 </style>

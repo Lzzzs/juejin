@@ -265,4 +265,17 @@ export default {
     }
   }
 }
+
+@media screen and (max-width: 980px) {
+  .index-container {
+    padding: 0px 20px;
+    .index-main {
+      color: red;
+      width: 100%;
+    }
+    .index-side {
+      display: none;
+    }
+  }
+}
 </style>
