@@ -16,7 +16,7 @@
         <div class="show" ref="show">
           <el-dropdown @command="handleCommand">
             <span class="el-dropdown-link">
-              下拉菜单<i class="el-icon-arrow-down el-icon--right"></i>
+              更多<i class="el-icon-arrow-down el-icon--right"></i>
             </span>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item :command="item" ref="navItem" v-for="(item, index) in arr" :key="index">{{ item.name }}</el-dropdown-item>
