@@ -16,7 +16,7 @@
         <div class="show" ref="show">
           <el-dropdown @command="handleCommand">
             <span class="el-dropdown-link">
-              下拉菜单<i class="el-icon-arrow-down el-icon--right"></i>
+              更多<i class="el-icon-arrow-down el-icon--right"></i>
             </span>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item :command="item" ref="navItem" v-for="(item, index) in arr" :key="index">{{ item.name }}</el-dropdown-item>
@@ -419,4 +419,13 @@ export default {
     text-align: center;
     margin-left: 20px;
   }
+
+@media screen and (max-width: 980px) {
+  .search-form {
+    display: none;
+  }
+  .topbar {
+    padding: 0px 20px;
+  }
+}
 </style>

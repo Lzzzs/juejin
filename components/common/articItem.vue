@@ -4,7 +4,12 @@
       <ul class="artic-item__meta">
         <li class="meta-item">
           <span class="meta-item__username">
-            <nuxt-link :to="'/user/'+uid" target="_blank" @click.native="(e) => e.stopPropagation()">{{ item.attributes.author.data.attributes.user_name }}</nuxt-link>
+            <nuxt-link
+              :to="'/user/' + uid"
+              target="_blank"
+              @click.native="(e) => e.stopPropagation()"
+            >{{ item.attributes.author.data.attributes.user_name }}
+            </nuxt-link>
           </span>
         </li>
         <li class="meta-item">{{ item.attributes.ctime | formatTime }}</li>
@@ -14,8 +19,18 @@
           </template>
         </li> -->
       </ul>
-      <p class="artic-item__title ellipsis" v-html="highlight.title || item.attributes.title"></p>
-      <p class="artic-item__desc" v-html="highlight.description || highlight.text || item.attributes.brief_content"></p>
+      <p
+        class="artic-item__title ellipsis"
+        v-html="highlight.title || item.attributes.title"
+      ></p>
+      <p
+        class="artic-item__desc"
+        v-html="
+          highlight.description ||
+            highlight.text ||
+            item.attributes.brief_content
+        "
+      ></p>
       <!-- <ul class="artic-item__action">
         <li class="action-item" :class="{active: item.attributes[likeField]}" @click.stop="articleLike">
           <img v-if="item.attributes[likeField]" class="action-item__icon" src="~assets/images/png/like.png">
@@ -28,81 +43,104 @@
         </li>
       </ul> -->
     </div>
-    <img v-if="item.attributes.cover_image" :src="getUrl(item.attributes.cover_image.data.attributes.url)" class="artic-item__cover"/>
+    <img
+      v-if="item.attributes.cover_image"
+      :src="getUrl(item.attributes.cover_image.data.attributes.url)"
+      class="artic-item__cover"
+    />
   </div>
 </template>
 
 <script>
-export default {  
+export default {
   props: {
     item: {
       type: Object,
-      default: () => ({})
+      default: () => ({}),
     },
     hasDesc: {
       type: Boolean,
-      default: false
+      default: false,
     },
     highlight: {
       type: Object,
-      default: () => ({})
-    }
+      default: () => ({}),
+    },
   },
   computed: {
     // 点赞状态字段不一致  此处筛选出对应字段
     likeField() {
-      let fields = ['is_digg']
-      return fields.filter(key => this.item[key] == undefined ? false : key)[0]
+      let fields = ["is_digg"];
+      return fields.filter((key) =>
+        this.item[key] == undefined ? false : key
+      )[0];
     },
     // 点赞数字段不一致  此处筛选出对应字段
     likeCountField() {
-      let fields = ['digg_count']
-      return fields.filter(key => this.item.attributes[key] == undefined ? false : key)[0]
+      let fields = ["digg_count"];
+      return fields.filter((key) =>
+        this.item.attributes[key] == undefined ? false : key
+      )[0];
     },
     // 统一 uid值
     uid() {
-      return this.item.attributes.author.data.id
+      return this.item.attributes.author.data.id;
     },
     detailId() {
-      return this.item.article_id
-    }
+      console.log("走到了detailId()方法里面");
+      console.log(
+        "detailId()返回的值this.item.article_id为" + this.item.article_id
+      );
+      console.log(this.item);
+      return this.item.id;
+    },
   },
   methods: {
-    getUrl(url){
-      return `http://lzzzs.top:1337${url}`
+    getUrl(url) {
+      return `http://lzzzs.top:1337${url}`;
     },
-    toDetail(hash = '') {
+    toDetail(hash = "") {
+      console.log("走进了articleItem.vue的toDetail方法里面");
       let routeUrl = this.$router.resolve({
-        name: 'detail-id',
+        name: "detail-id",
         params: {
-          id: this.detailId
-        }
-      })
-      window.open(routeUrl.href + hash, '_blank')
+          id: this.detailId,
+        },
+      });
+      console.log(
+        "articleItem.vue的toDetail方法里面的detailId为" + this.detailId
+      );
+      console.log(
+        "articleItem.vue的toDetail方法里面的routeUrl.href为" + routeUrl.href
+      );
+      window.open(routeUrl.href + hash, "_blank");
+      // window.open("/detail/2" + hash, '_blank')
     },
     async articleLike() {
       if (!this.$store.state.auth.token) {
-        this.$loginModal(this)
-        return
+        this.$loginModal(this);
+        return;
       }
-      let id = this.item.id
+      let id = this.item.id;
       if (id && this.likeField && this.likeCountField) {
         let res = await this.$api.articleLike({
           entryId: id,
-          isCollected: !this.item[this.likeField]
-        })
+          isCollected: !this.item[this.likeField],
+        });
         // 更新视图点赞状态
         if (res.s === 1) {
-          this.$emit('update:item', {
+          this.$emit("update:item", {
             ...this.item,
             [this.likeField]: !this.item[this.likeField],
-            [this.likeCountField]: this.item[this.likeField] ? Number(this.item[this.likeCountField]) - 1 : Number(this.item[this.likeCountField]) + 1
-          })
+            [this.likeCountField]: this.item[this.likeField]
+              ? Number(this.item[this.likeCountField]) - 1
+              : Number(this.item[this.likeCountField]) + 1,
+          });
         }
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -112,8 +150,8 @@ export default {
   padding: 20px 25px;
   cursor: pointer;
 
-  &:hover{
-    background: rgba(0,0,0,.01);
+  &:hover {
+    background: rgba(0, 0, 0, 0.01);
   }
 }
 
@@ -152,7 +190,7 @@ export default {
     }
   }
 
-  .mate-item--hot{
+  .mate-item--hot {
     color: #f70;
   }
 
@@ -163,7 +201,7 @@ export default {
   .meta-item__username {
     cursor: pointer;
 
-    &:hover{
+    &:hover {
       color: $theme;
     }
   }
@@ -171,7 +209,7 @@ export default {
   .meta-item__tag {
     cursor: pointer;
 
-    &:hover{
+    &:hover {
       color: $theme;
     }
 
@@ -195,11 +233,11 @@ export default {
   color: inherit;
   text-decoration: none;
 
-  &:hover{
+  &:hover {
     text-decoration: underline;
   }
 
-   ::v-deep  em{
+  ::v-deep em {
     color: #e8001c;
   }
 }
@@ -213,7 +251,7 @@ export default {
   white-space: nowrap;
   overflow: hidden;
 
-   ::v-deep  em{
+  ::v-deep em {
     color: #e8001c;
   }
 }
@@ -232,14 +270,14 @@ export default {
     padding: 0 10px;
     border: 1px solid #edeeef;
 
-    .action-item__icon{
+    .action-item__icon {
       margin-right: 3px;
       display: block;
       width: 16px;
       height: 16px;
     }
 
-    &.active{
+    &.active {
       color: $success;
     }
 

@@ -71,6 +71,7 @@ import aboutArticle from "~/components/business/detail/aboutArticle.vue";
 import catalog from "~/components/business/detail/catalog.vue";
 export default {
   async asyncData({ app, params }) {
+    console.log("111111");
     // 在开发的时候这里是写死的2
     const articDetail = await app.$api
       .getDetail({
@@ -191,7 +192,7 @@ export default {
 };
 </script>
 
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 .detail-container {
   display: flex;
   .detail-main {
@@ -428,6 +429,17 @@ export default {
       font-weight: bold;
       color: #262626;
     }
+  }
+}
+
+@media screen and (max-width: 980px) {
+  .detail-side {
+    display: none;
+  }
+
+  .detail-main {
+    flex: 1;
+    margin-left: 20px;
   }
 }
 </style>
