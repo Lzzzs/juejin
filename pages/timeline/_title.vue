@@ -5,12 +5,10 @@
       <div class="index-main shadow">
         <div class="list__header">
           <ul class="list__nav">
-            <li class="list__nav-item" :class="{ 'list__nav-item--active': item.id == navId }" v-for="item in navs"
-              :key="item.title" @click="changeNavType(item)">
+            <li class="list__nav-item" :class="{ 'list__nav-item--active': item.id == navId }" v-for="item in navs" :key="item.title" @click="changeNavType(item)">
               {{ item.title }}
             </li>
-            <el-select v-if="navTypes.length" size="mini" style="width:100px" v-model="sort_type" placeholder="请选择"
-              @change="changeNavType">
+            <el-select v-if="navTypes.length" size="mini" style="width:100px" v-model="sort_type" placeholder="请选择" @change="changeNavType">
               <el-option v-for="item in navTypes" :key="item.title" :label="item.title" :value="item.type">
               </el-option>
             </el-select>
@@ -54,7 +52,7 @@ export default {
       app.$api.getIndexList().then(res => res),
       // 右侧作者列表
       app.$api.getAuthorBlock().then(res => res.meta.total !== 0 ? res.data.slice(0, 3) : []),
-      // 右侧广告	  
+      // 右侧广告
       app.$api.getBanerBlock().then(res => res.meta.total !== 0 ? res.data.slice(0, 2) : []),
     ])
     // 列表下一页信息
