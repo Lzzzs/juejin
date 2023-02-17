@@ -1,10 +1,10 @@
 <template>
   <div class="detail-container">
     <div class="detail-main">
-      <div class="detail-block shadow">
+      <div class="detail-block shadow" :class="[isWhite? 'day':'night', 'detail-block','shadow']">
         <div class="detail">
           <div class="detail__header">
-            <div class="detail__userInfo">
+            <div :class="[isWhite? 'day':'night', 'detail__userInfo']">
               <nuxt-link
                 :to="'/user/' + articDetail.attributes.author.data.id"
                 class="detail__user__avatar"
@@ -18,9 +18,11 @@
                   :round="true"
                 ></user-avatar>
               </nuxt-link>
+              <!--     class="detail__user__name" -->
+              <!--  :class="[isWhite? 'day':'night', 'detail__user__name'] -->
               <nuxt-link
                 :to="'/user/' + articDetail.attributes.author.data.id"
-                class="detail__user__name"
+                :class="[isWhite? 'day':'night', 'detail__user__name']"
                 target="_blank"
               >
                 <span style="margin-right: 10px">{{
@@ -44,8 +46,8 @@
             class="detail__cover"
             :style="`background-image: url(${articDetail.attributes.cover_image.data.attributes.url})`"
           ></div>
-          <h1 class="detail__title">{{ articDetail.attributes.title }}</h1>
-          <div class="detail__content" v-html="content"></div>
+          <h1 :class="[isWhite? 'day':'night', 'detail__title']">{{ articDetail.attributes.title }}</h1>
+          <div :class="[isWhite? 'day':'night', 'detail__content']" v-html="content"></div>
         </div>
       </div>
     </div>
@@ -61,6 +63,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import markdownit from "markdown-it";
 import highlight from "highlight.js";
 import reachBottom from "~/mixins/reachBottom";
@@ -115,6 +118,9 @@ export default {
       articDetail,
       aboutArticles,
     };
+  },
+  computed: {
+    ...mapState(['isWhite'])
   },
   head() {
     return {

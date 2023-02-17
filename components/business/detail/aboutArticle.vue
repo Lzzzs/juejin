@@ -1,8 +1,8 @@
 <template>
-  <div class="about-article shadow">
+  <div :class="[isWhite? 'day':'night', 'about-article', 'shadow']">
     <div class="about-article__title">相关文章</div>
     <nuxt-link v-for="item in list" :key="item.id" :to="'/detail/'+item.id" target="_blank">
-      <div class="article-item">
+      <div :class="[isWhite? 'day':'night', 'article-item']">
         <div class="article__title">{{ item.attributes.title }}</div>
         <div class="article__meta">
         </div>
@@ -12,6 +12,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   // 参数是别的地方传过来的
   props: {
@@ -19,7 +20,10 @@ export default {
       type: Array,
       default: () => []
     }
-  }
+  },
+  computed: {
+    ...mapState(['isWhite'])
+  },
 }
 </script>
 

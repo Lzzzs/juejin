@@ -1,5 +1,6 @@
 <template>
   <div class="author-block shadow">
+    <!-- :class="[isWhite? 'day':'night', 'author-block__title']" -->
     <div class="author-block__title">🎖️ 作者榜</div>
     <nuxt-link :to="'/user/'+item.user_id" target="_blank" v-for="item in list" :key="item.user_id">
       <div class="author-item">
@@ -29,14 +30,20 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   props: {
     list: {
       type: Array,
       default: () => []
     }
-  }
+  },
+  computed: {
+    ...mapState(['isWhite'])
+  },
 }
+
+
 </script>
 
 <style lang='scss' scoped>

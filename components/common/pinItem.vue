@@ -1,5 +1,5 @@
 <template>
-  <div class="pin-item">
+  <div :class="[isWhite? 'day':'night', 'pin-item']">
     <!-- 关注类型 -->
     <template v-if="action === 'FOLLOW_USER'">
       <div v-if="actors.length" class="follow-block">
@@ -26,15 +26,18 @@
         <nuxt-link :to="'/user/'+actors[0].id" class="actor-username" target="_blank">{{ actors[0].username }}</nuxt-link>
         赞了这篇文章
       </div>
-      <div class="item-main">
+      <!-- :class="[isWhite? 'day':'night', 'item-main']" 出错 -->
+      <div :class="[isWhite? 'topBarDay':'night', 'item-main']">
         <!-- 用户信息区域 -->
         <nuxt-link class="user-avatar" :to="'/user/'+uid" target="_blank">
           <user-avatar :url="item.author_user_info.avatar_large" :round="true"></user-avatar>
         </nuxt-link>
+        <!--:class="[isWhite? 'day':'night', 'pin-info']"  -->
+        <!-- :class="[isWhite? 'day':'night', 'user-info']" -->
         <div class="pin-info">
           <div class="user-info">
             <div style="width: 70%">
-              <nuxt-link class="user-name ellipsis" :to="'/user/'+uid" target="_blank">{{ item.author_user_info.user_name }}</nuxt-link>
+              <nuxt-link :class="[isWhite? 'day':'night', 'user-name', 'ellipsis']" :to="'/user/'+uid" target="_blank">{{ item.author_user_info.user_name }}</nuxt-link>
               <div class="user-job-title ellipsis">
                 {{ item.author_user_info.job_title }}
                 {{ item.author_user_info.job_title && item.author_user_info.company ? '@' : '' }}
@@ -59,8 +62,8 @@
           </div>
           <!-- 沸点类型 -->
           <div v-else>
-            <div class="pin-content">
-              <span class="pre" v-for="citem in pinContent" :key="citem.id">
+            <div :class="[isWhite? 'topBarDay':'night', 'pin-content']">
+              <span :class="[isWhite? 'topBarDay':'night', 'pre']" v-for="citem in pinContent" :key="citem.id">
                 <template v-if="citem.type === 'text'">{{ citem.value }}</template>
                 <a class="url" v-if="citem.type === 'url'" :href="citem.url" target="_blank" rel="noopener noreferrer">
                   <img src="https://b-gold-cdn.xitu.io/v3/static/img/pin-url-link.3f843e8.svg">{{ citem.value }}
@@ -91,7 +94,7 @@
         </div>
       </div>
       <!-- 底部栏 -->
-      <div class="item-meta">
+      <div :class="[isWhite? 'topBarDay':'night', 'item-meta']">
         <div class="meta-item" @click="pinLike">
           <span class="meta-info" :class="{'meta-info--active': item.user_interact.is_digg}">
             <img v-if="item.user_interact.is_digg" src="~/assets/images/pin-like-active.svg">
@@ -128,6 +131,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   props: {
     item: {
@@ -149,6 +153,7 @@ export default {
     }
   },
   computed: {
+    ...mapState(['isWhite']),
     // 统一 id值
     pinId() {
       return this.item.msg_id

@@ -1,13 +1,15 @@
 <template>
   <div class="author-block shadow">
-    <div class="author-block__title">🎖️ 作者榜</div>
+    <!-- :class="[isWhite? 'day':'night', 'author-block__title']" -->
+    <!-- class="author-block__title" -->
+    <div :class="[isWhite? 'day':'night', 'author-block__title']">🎖️ 作者榜</div>
     <div v-for="item in list" :key="item.id">
-      <div class="author-item">
+      <div :class="[isWhite? 'day':'night', 'author-item']">
         <div class="author__avatar">
           <user-avatar :url="getUrl(item.attributes.avatar_large.data.attributes.url)" :round="true"></user-avatar>
         </div>
         <div class="author__info">
-          <div class="author__name">
+          <div :class="[isWhite? 'day':'night', 'author__name']">
             {{ item.attributes.user_name }}
             <level :level="item.attributes.level"></level>
           </div>
@@ -20,7 +22,7 @@
       </div>
     </div>
     <nuxt-link to="/recommendation/authors/recommended">
-      <div class="author-block__footer">
+      <div :class="[isWhite? 'day':'night', 'author-block__footer']">
         完整榜单
       </div>
     </nuxt-link>
@@ -28,6 +30,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   props: {
     list: {
@@ -39,7 +42,10 @@ export default {
     getUrl(url){
       return `http://lzzzs.top:1337${url}`
     }
-  }
+  },
+  computed: {
+    ...mapState(['isWhite'])
+  },
 }
 </script>
 

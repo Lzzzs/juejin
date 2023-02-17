@@ -1,7 +1,7 @@
 <template>
   <div class="about-author shadow" v-if="info">
-    <div class="about-author__title">关于作者</div>
-    <div class="author__main">
+    <div :class="[isWhite? 'day':'night', 'about-author__title']">关于作者</div>
+    <div :class="[isWhite? 'day':'night', 'about-author__main']">
       <nuxt-link :to="'/user/'+info.attributes.author.data.id" class="author__info-block" target="_blank">
         <div class="author__avatar">
         </div>
@@ -17,7 +17,7 @@
           </div>
         </div>
       </nuxt-link>
-      <div class="author__meta">
+      <div :class="[isWhite? 'day':'night', 'author__meta']">
         <div class="honor-item">
           <img class="honor-item__icon shadow" src="~/assets/images/honor-4.svg" />
           <span class="honor-item__title">获得点赞 {{ info.attributes.author.data.attributes.got_digg_count }}</span>
@@ -32,7 +32,11 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 export default {
+  ...mapState([
+    'isWhite'
+  ]),
   props: {
     info: {
       type: Object,

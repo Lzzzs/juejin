@@ -3,10 +3,10 @@
     <div class="pin-nav">
       <pin-category></pin-category>
     </div>
-    <nuxt-child class="pin-main" />
+    <nuxt-child :class="[isWhite? 'day':'night', 'pin-main']" />
     <div class="pin-aside">
       <recommend-pin v-if="recommendPins.length" :list="recommendPins"></recommend-pin>
-      <div v-if="followTopicList.length" class="followed-topics shadow">
+      <div v-if="followTopicList.length" :class="[isWhite? 'day':'night', 'shadow', 'followed-topics']">
         <div class="followed-topics__header">
           <div class="title">关注的话题</div>
           <nuxt-link to="/topic" class="all-btn" target="_blank">全部</nuxt-link>
@@ -24,6 +24,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import pinCategory from '~/components/business/pins/pinCategory'
 import recommendPin from '~/components/business/pins/recommendPin'
 
@@ -63,6 +64,9 @@ export default {
     return {
       title: '沸点 - 掘金'
     }
+  },
+  computed: {
+    ...mapState(['isWhite'])
   },
   components: {
     'pin-category': pinCategory,

@@ -2,7 +2,7 @@
   <div>
     <timeline-category :channels="timelineCategoryList"></timeline-category>
     <div class="index-container">
-      <div class="index-main shadow">
+      <div :class="[(isWhite? 'topBarDay':'night'), 'index-main', 'shadow']">
         <div class="list__header">
           <ul class="list__nav">
             <li class="list__nav-item" :class="{ 'list__nav-item--active': item.id == navId }" v-for="item in navs" :key="item.title" @click="changeNavType(item)">
@@ -168,8 +168,12 @@ export default {
       isReachBottomFetching: false,  // 防止触底多次请求
     };
   },
+  created() {
+    console.log(this.isWhite, 'jfdakljflda');
+  },
   computed: {
-    ...mapState('category', ['timelineCategoryList'])
+    ...mapState('category', ['timelineCategoryList']),
+    ...mapState(['isWhite'])
   },
   methods: {
     reachBottom() {

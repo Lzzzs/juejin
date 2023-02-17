@@ -1,11 +1,11 @@
 <template>
-  <div class="books">
-    <div class="book-item" v-for="item in list" :key="item.booklet_id">
+  <div :class="[isWhite? 'topBarDay':'night', 'books']">
+    <div :class="[isWhite? 'topBarDay':'night', 'book-item']" v-for="item in list" :key="item.booklet_id">
       <div class="book__cover" :style="`background-image: url(${item.base_info.cover_img})`"></div>
-      <div class="book__info">
+      <div :class="[isWhite? 'topBarDay':'night', 'book__info']">
         <div class="book__title">{{ item.base_info.title }}</div>
-        <div class="book__desc ellipsis">{{ item.base_info.summary }}</div>
-        <div class="book__author">
+        <div :class="[isWhite? 'topBarDay':'night', 'book__desc', 'ellipsis']">{{ item.base_info.summary }}</div>
+        <div :class="[isWhite? 'topBarDay':'night', 'book__author']">
           <nuxt-link class="author__info" :to="'/user/'+item.user_info.user_id" target="_blank">
             <div class="author__avatar">
               <user-avatar :url="item.user_info.avatar_large" :round="true"></user-avatar>
@@ -21,7 +21,7 @@
         </div>
         <div class="book__data">
           <span class="book__price" :class="{'book__buy': item.is_buy}">{{ item.is_buy ? '已购买' : '￥'+item.base_info.price/100 }}</span>
-          <span class="book__meta">{{ item.base_info.section_count }}小节 · {{ item.base_info.buy_count }}人已购买</span>
+          <span :class="[isWhite? 'day':'night', 'book__meta']">{{ item.base_info.section_count }}小节 · {{ item.base_info.buy_count }}人已购买</span>
         </div>
       </div>
     </div>
@@ -29,7 +29,11 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
+  computed: {
+    ...mapState(['isWhite'])
+  },
   props: {
     list: {
       type: Array,
@@ -42,6 +46,7 @@ export default {
 <style lang='scss' scoped>
 .books{
   background: #fff;
+  border-top: 1px solid white;
 }
 .book-item{
   display: flex;

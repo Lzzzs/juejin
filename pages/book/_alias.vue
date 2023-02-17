@@ -1,7 +1,7 @@
 <template>
   <div class="book-container">
     <book-category :channels="bookCategoryList"></book-category>
-    <div class="book-main shadow">
+    <div :class="[isWhite? 'day':'night', 'shadow', 'book-main']">
       <book-list :list="books"></book-list>
     </div>
   </div>
@@ -65,7 +65,8 @@ export default {
     }
   },
   computed: {
-    ...mapState('category', ['bookCategoryList'])
+    ...mapState('category', ['bookCategoryList']),
+    ...mapState('isWhite')
   },
   methods: {
     reachBottom() {

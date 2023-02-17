@@ -1,6 +1,6 @@
 <template>
   <nav class="nav-view">
-    <div class="nav-mian shadow" :class="{'nav-main--sticky': !isTopbarBlock}">
+    <div class="nav-mian shadow" :class="[{'nav-main--sticky': !isTopbarBlock}, isWhite? 'topBarDay':'night']">
       <ul class="nav-list">
         <li class="nav-item"
             :class="{'nav-item--active': item.category_url === paramsTitle}"
@@ -55,7 +55,8 @@ export default {
   },
   computed: {
     ...mapState([
-      'isTopbarBlock'
+      'isTopbarBlock',
+      'isWhite'
     ]),
     ...mapState('auth', [
       'token'

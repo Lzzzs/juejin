@@ -1,6 +1,6 @@
 <template>
   <nav class="nav-view">
-    <div class="nav-mian shadow" :class="{'nav-main--sticky': !isTopbarBlock}">
+    <div class="nav-mian shadow" :class="[{'nav-main--sticky': !isTopbarBlock}, isWhite? 'topBarDay':'night']">
       <ul class="nav-list">
         <li class="nav-item" :class="{'nav-item--active': item.category_url === paramsAlias}" v-for="item in channels" :key="item.category_id" @click="navItemClick(item)">{{ item.category_name }}</li>
       </ul>
@@ -19,7 +19,8 @@ export default {
   },
   computed: {
     ...mapState([
-      'isTopbarBlock'
+      'isTopbarBlock',
+      'isWhite'
     ]),
     paramsAlias() {
       return this.$route.params.alias || 'recommended'

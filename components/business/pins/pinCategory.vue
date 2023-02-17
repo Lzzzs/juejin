@@ -1,5 +1,5 @@
 <template>
-  <ul class="nav-list" :class="{'nav-list--sticky': !isTopbarBlock}">
+  <ul class="nav-list" :class="[{'nav-list--sticky': !isTopbarBlock}, isWhite? 'topBarDay':'night']">
     <li class="nav-item" :class="{'nav-item--active': item.path == $route.path}" v-for="item in navList" :key="item.topic_id" :title="item.title" @click="changeCategory">
       <nuxt-link :to="item.path">{{ item.title }}</nuxt-link>
     </li>
@@ -14,7 +14,8 @@ export default {
       navList: 'pinCategoryList'
     }),
     ...mapState([
-      'isTopbarBlock'
+      'isTopbarBlock',
+      'isWhite'
     ])
   },
   methods: {

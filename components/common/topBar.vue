@@ -1,6 +1,6 @@
 <template>
   <header class="topbar__wrapper">
-    <div class="topbar" :class="['topbar--'+(isTopbarBlock ? 'show' : 'hidden')]">
+    <div class="topbar" ref="topbar" :class="['topbar--'+(isTopbarBlock ? 'show' : 'hidden'), topicWhite? 'topBarDay':'night']">
       <div class="topbar__main">
         <nuxt-link to="/timeline" class="logo">
           <img src="~assets/images/png/logo.svg" alt="掘金">
@@ -94,7 +94,14 @@ export default {
       isShowNavMenu: false,
       navList: [],
       arr: [],
-      resArr: []
+      resArr: [],
+      white: ''
+    }
+  },
+  props: {
+    topicWhite: {
+      type: [Boolean, String],
+      default: true
     }
   },
   async fetch() {
@@ -111,8 +118,15 @@ export default {
       }
     })
   },
-
+  created() {
+    if (process.client) {
+      this.white = localStorage.getItem('isWhite')
+      // console.log('topicWhite', this.topicWhite);
+      // console.log('w', this.isWhite)
+    }
+  },
   mounted() {
+    console.log(this.$refs.topbar);
     let scrollingElement = document.scrollingElement
     let scrollTop = 0
     window.addEventListener('scroll', () => {
@@ -133,7 +147,8 @@ export default {
   },
   computed: {
     ...mapState([
-      'isTopbarBlock'
+      'isTopbarBlock',
+      'isWhite'
     ]),
     ...mapState('auth', [
       'userInfo'

@@ -1,0 +1,14 @@
+.day {
+  color:black !important;
+  background: #F4F4F4 !important;
+}
+
+.night {
+  color:white !important;
+  background: black !important;
+}
+
+.topBarDay {
+  color:black !important;
+  background: white !important;
+}
