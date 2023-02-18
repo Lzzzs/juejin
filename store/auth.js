@@ -3,7 +3,7 @@ export const state = () => ({
   userInfo: null, // 登录用户信息
   userId: '',
   clientId: '',
-  token: ''
+  token: '',
 })
 
 export const mutations = {

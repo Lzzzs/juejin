@@ -74,6 +74,7 @@ module.exports = {
     "~/assets/css/reset.css",
     "~/assets/css/page-transition.css",
     "~/assets/scss/global.scss",
+    "~/assets/css/topic.css",
   ],
   /*
    ** Plugins to load before mounting the App
@@ -83,7 +84,7 @@ module.exports = {
     "~/plugins/request.js",
     "~/plugins/api.js",
     "~/plugins/vue-global.js",
-    "~/plugins/i18n.js",
+    "~/plugins/i18n.js"
   ],
   /*
    ** Nuxt.js dev-modules

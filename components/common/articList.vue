@@ -1,5 +1,5 @@
 <template>
-  <div class="artic-list">
+  <div :class="[isWhite? 'topBarDay':'night', 'artic-list']">
     <ul v-for="item in list" :key="item.article_id">
       <li class="artic-item--border">
         <artic-item :item.sync="item"></artic-item>
@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   props: {
     hasDesc: {
@@ -31,9 +32,13 @@ export default {
     }
   },
   created() {
+    console.log('fjakld', this.isWhite);
   },
   methods: {
-  }
+  },
+  computed: {
+  ...mapState(['isWhite'])
+  },
 }
 </script>
 

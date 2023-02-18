@@ -1,10 +1,10 @@
 <template>
-  <div class="pin-recommend-block shadow">
-    <div class="pin-recommend__title">推荐沸点</div>
-    <nuxt-link :to="'/pin/'+item.msg_id" class="pin-recommend-item" v-for="item in list" :key="item.msg_id" :title="item.msg_Info.content" target="_blank">
+  <div :class="[isWhite? 'topBarDay':'night', 'shadow', 'pin-recommend-block']">
+    <div :class="[isWhite? 'topBarDay':'night', 'pin-recommend__title']">推荐沸点</div>
+    <nuxt-link :class="[isWhite? 'topBarDay':'night', 'pin-recommend-item']" :to="'/pin/'+item.msg_id" v-for="item in list" :key="item.msg_id" :title="item.msg_Info.content" target="_blank">
       <div class="item-info">
-        <div class="item-content" :class="{'with-picture': item.msg_Info.pic_list.length}">{{ item.msg_Info.content }}</div>
-        <div class="item-meta">{{ item.msg_Info.digg_count }} 赞 · {{ item.msg_Info.comment_count }} 评论</div>
+        <div class="item-content" :class="[{'with-picture': item.msg_Info.pic_list.length}, isWhite? 'topBarDay':'night']">{{ item.msg_Info.content }}</div>
+        <div :class="[isWhite? 'topBarDay':'night', 'item-meta']">{{ item.msg_Info.digg_count }} 赞 · {{ item.msg_Info.comment_count }} 评论</div>
       </div>
       <div v-if="item.msg_Info.pic_list.length" class="item-cover" :style="`background-image: url(${item.msg_Info.pic_list[0]})`"></div>
     </nuxt-link>
@@ -12,7 +12,11 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
+  computed: {
+    ...mapState(['isWhite'])
+  },
   props: {
     list: {
       type: Array,

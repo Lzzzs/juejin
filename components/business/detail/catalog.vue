@@ -3,10 +3,10 @@
     <div v-show="catalogData.length" class="catalog__title">目录</div>
     <div class="catalog__body">
       <ul class="catalog__list">
-        <li class="catalog-item" :class="[c1.level, {'catalog-item--active' : c1.id === currentCatalogId }]" v-for="c1 in catalogData" :key="c1.id">
+        <li class="catalog-item" :class="[c1.level, {'catalog-item--active' : c1.id === currentCatalogId }, isWhite? 'day':'night', ]" v-for="c1 in catalogData" :key="c1.id">
           <a class="ellipsis" :href="'#'+c1.id" :title="c1.title" @click="currentCatalogId = c1.id">{{ c1.title }}</a>
           <ul v-if="c1.children.length">
-            <li class="catalog-item" :class="[c2.level, {'catalog-item--active' : c2.id === currentCatalogId }]" v-for="c2 in c1.children" :key="c2.id">
+            <li class="catalog-item" :class="[c2.level, {'catalog-item--active' : c2.id === currentCatalogId }, isWhite? 'day':'night', ]" v-for="c2 in c1.children" :key="c2.id">
               <a class="ellipsis" :href="'#'+c2.id" :title="c2.title" @click="currentCatalogId = c2.id">{{ c2.title }}</a>
               <ul v-if="c2.children.length">
                 <li class="catalog-item" :class="[c3.level, {'catalog-item--active' : c3.id === currentCatalogId }]" v-for="c3 in c2.children" :key="c3.id">
@@ -35,7 +35,8 @@ export default {
   },
   computed: {
     ...mapState([
-      'isTopbarBlock'
+      'isTopbarBlock',
+      'isWhite'
     ])
   },
   mounted() {

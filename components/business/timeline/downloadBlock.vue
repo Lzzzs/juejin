@@ -2,11 +2,11 @@
   <div class="sidebar-block download-block">
     <div class="download-body">
       <a href="https://juejin.cn/app" target="_blank">
-        <div class="app-link">
+        <div :class="[isWhite? 'day':'night', 'app-link']">
           <img src="https://lf3-cdn-tos.bytescm.com/obj/static/xitu_juejin_web/img/home.59780ae.png" class="qr-img">
           <div class="content-box">
-            <div class="headline">下载稀土掘金APP</div>
-            <div class="desc">一个帮助开发者成长的社区</div>
+            <div :class="[isWhite? 'day':'night', 'headline']">下载稀土掘金APP</div>
+            <div :class="[isWhite? 'day':'night', 'desc']">一个帮助开发者成长的社区</div>
           </div>
         </div>
       </a>
@@ -15,6 +15,16 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+export default {
+  computed: {
+    ...mapState(['isWhite'])
+  },
+  created() {
+    console.log('w', this.isWhite);
+  }
+}
+
 </script>
 
 <style scoped lang="scss">
