@@ -10,22 +10,14 @@ git clone https://github.com/Lzzzs/juejin.git
 
 ## 项目安装
 
-**根据使用不同的包管理器执行对应命令**
-
 ```shell
 npm i
-yarn
-pnpm
 ```
 
 ## 提交代码
 
-**根据使用不同的包管理器执行对应命令**
-
 ```shell
 npm run commit
-yarn commit
-pnpm commit
 ```
 
 - 执行完命令之后，默认会将**所有更改文件提交至暂存区**
