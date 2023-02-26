@@ -6,12 +6,12 @@
           <img src="~assets/images/png/logo.svg" alt="掘金">
         </nuxt-link>
         <ul class="navs">
-          <nuxt-link v-for="item in navList" :key="item.id" :to="item.link" tag="li" class="nav-item">
+          <li v-for="item in navList" @click="handleNavClick(item)" :key="item.id" tag="li" class="nav-item">
             <div class="position_div">
               <span>{{ $t('topbar.'+item.name) }}</span>
               <span class="top_message" v-if="item.topContent">{{ item.topContent }}</span>
             </div>
-          </nuxt-link>
+          </li>
         </ul>
         <div class="show" ref="show">
           <el-dropdown @command="handleCommand">
@@ -121,8 +121,6 @@ export default {
   created() {
     if (process.client) {
       this.white = localStorage.getItem('isWhite')
-      // console.log('topicWhite', this.topicWhite);
-      // console.log('w', this.isWhite)
     }
   },
   mounted() {
@@ -171,6 +169,13 @@ export default {
     }
   },
   methods: {
+    handleNavClick(item) {
+      if (item.link === "/timeline") {
+        this.$router.push(item.link)
+      } else {
+        this.$message.info("还未开发~")
+      }
+    },
     // 下拉菜单
     handleCommand(command) {
       this.$router.push(command.link)
