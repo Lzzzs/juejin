@@ -20,9 +20,6 @@ export default {
   computed: {
     ...mapState(['isWhite'])
   },
-  created() {
-    console.log('w', this.isWhite);
-  }
 }
 
 </script>

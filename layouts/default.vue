@@ -23,8 +23,6 @@ export default {
   created() {
     if (process.client) {
       this.white = localStorage.getItem('isWhite')
-      console.log(this.white);
-      console.log('is', this.isWhite);
     }
   },
   computed: {

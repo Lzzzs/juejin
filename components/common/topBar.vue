@@ -105,7 +105,6 @@ export default {
     }
   },
   async fetch() {
-    console.log('fetch');
     let res = await this.$api.getTags()
     this.resArr = Array.from(res.data)
     let that = this
@@ -124,7 +123,6 @@ export default {
     }
   },
   mounted() {
-    console.log(this.$refs.topbar);
     let scrollingElement = document.scrollingElement
     let scrollTop = 0
     window.addEventListener('scroll', () => {

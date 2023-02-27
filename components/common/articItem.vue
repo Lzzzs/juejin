@@ -87,11 +87,6 @@ export default {
       return this.item.attributes.author.data.id;
     },
     detailId() {
-      console.log("走到了detailId()方法里面");
-      console.log(
-        "detailId()返回的值this.item.article_id为" + this.item.article_id
-      );
-      console.log(this.item);
       return this.item.id;
     },
   },
@@ -100,19 +95,12 @@ export default {
       return `http://lzzzs.top:1337${url}`;
     },
     toDetail(hash = "") {
-      console.log("走进了articleItem.vue的toDetail方法里面");
       let routeUrl = this.$router.resolve({
         name: "detail-id",
         params: {
           id: this.detailId,
         },
       });
-      console.log(
-        "articleItem.vue的toDetail方法里面的detailId为" + this.detailId
-      );
-      console.log(
-        "articleItem.vue的toDetail方法里面的routeUrl.href为" + routeUrl.href
-      );
       window.open(routeUrl.href + hash, "_blank");
       // window.open("/detail/2" + hash, '_blank')
     },

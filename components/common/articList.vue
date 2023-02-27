@@ -31,9 +31,6 @@ export default {
     return {
     }
   },
-  created() {
-    console.log('fjakld', this.isWhite);
-  },
   methods: {
   },
   computed: {

@@ -46,7 +46,6 @@ export default {
       //   sort_type: 200,
       //   feed_type: currentCategoryItem.category_id ? 'cate' : 'all',
       // }).then(res => {
-      //   console.log(res);
       //   return res.err_no == 0 ? res : {}
       // }),
       app.$api.getIndexList().then(res => res),
@@ -167,9 +166,6 @@ export default {
       bannerList: [],
       isReachBottomFetching: false,  // 防止触底多次请求
     };
-  },
-  created() {
-    console.log(this.isWhite, 'jfdakljflda');
   },
   computed: {
     ...mapState('category', ['timelineCategoryList']),

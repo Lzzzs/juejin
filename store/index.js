@@ -16,6 +16,5 @@ export const mutations = {
     } else {
       state.isWhite = true
     }
-    console.log(state.isWhite);
   }
 }
